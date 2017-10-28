@@ -51,8 +51,8 @@ bot.recognizer(recognizer);
 
 // bot.dialog('/', intents);
 
-bot.dialog('Greeting', function (session) {
-    session.endDialog('Hello. Thanks for greeting with \'%s\'.', session.message.text);
+bot.dialog('Score', function (session) {
+    session.endDialog('Hello. Thanks for using this chatbot \'%s\'.', session.message.text);
 }).triggerAction({
-    matches: 'Greeting'
+    matches: 'Score'
 });
