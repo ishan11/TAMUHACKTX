@@ -39,14 +39,23 @@ var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.micro
 const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
 
 // Main dialog with LUIS
+// Main dialog with LUIS
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
-var intents = new builder.IntentDialog({ recognizers: [recognizer] })
+bot.recognizer(recognizer);
+
+//var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 /*
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
-.onDefault((session) => {
-    session.send('Sorry, I did not understand \'%s\'.', session.message.text);
-});
+// .onDefault((session) => {
+//     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
+// });
+//bot.dialog('/', intents);  
 
-bot.dialog('/', intents);    
+bot.dialog('Greeting', function (session) {
+    session.endDialog('Hello. Thanks for greeting with \'%s\'.', session.message.text);
+}).triggerAction({
+    matches: 'Greeting'
+});
+  
 
