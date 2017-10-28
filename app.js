@@ -29,7 +29,9 @@ server.post('/api/messages', connector.listen());
 * ---------------------------------------------------------------------------------------- */
 
 // Create your bot with a function to receive messages from the user
-var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector, function (session) {
+    session.send('Sorry, I did not understand \'%s\'. Type \'help\' if you need assistance.', session.message.text);
+});
 
 // Make sure you add code to validate these fields
 var luisAppId = process.env.LuisAppId;
@@ -38,7 +40,6 @@ var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.micro
 
 const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
 
-// Main dialog with LUIS
 // Main dialog with LUIS
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 bot.recognizer(recognizer);
