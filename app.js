@@ -8,15 +8,15 @@ var builder = require('botbuilder');
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
+    console.log('%s listening to %s', server.name, server.url);
 });
-  
+
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
     appId: process.env.MicrosoftAppId,
     appPassword: process.env.MicrosoftAppPassword,
     stateEndpoint: process.env.BotStateEndpoint,
-    openIdMetadata: process.env.BotOpenIdMetadata 
+    openIdMetadata: process.env.BotOpenIdMetadata
 });
 
 // Listen for messages from users 
@@ -43,20 +43,16 @@ const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' +
 // Main dialog with LUIS
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 bot.recognizer(recognizer);
+// var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 
-//var intents = new builder.IntentDialog({ recognizers: [recognizer] })
-/*
-.matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
-*/
 // .onDefault((session) => {
 //     session.send('Sorry, I did not understand \'%s\'.', session.message.text);
 // });
-//bot.dialog('/', intents);  
+
+// bot.dialog('/', intents);
 
 bot.dialog('Greeting', function (session) {
     session.endDialog('Hello. Thanks for greeting with \'%s\'.', session.message.text);
 }).triggerAction({
     matches: 'Greeting'
 });
-  
-
