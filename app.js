@@ -59,23 +59,25 @@ bot.dialog('Score', function (session) {
 
 var request = require('request');
 
-function GetChargeState(){
-    // request({
-    //     method: 'GET',
-    //     url: 'https://owner-api.teslamotors.com/api/1/vehicles/48566444687533804/data_request/charge_state',
-    //     headers: {
-    //         'Authorization': 'Bearer 2c28647c1b8bc15012876e77ce3f6ea1e58a11efed9eeba9f66fdb755c3fbfab'
-    //     }
-    // }, function (error, response, body) {
-    //     console.log('Status:', response.statusCode);
-    //     //console.log('Headers:', JSON.stringify(response.headers));
-    //     console.log('Response:', body);
-    //     return 5;//JSON.parse(body).response;
-    // });
-    return 5;
+function getCharging(callback) {
+    ishan({
+        method: 'GET',
+        url: 'https://owner-api.teslamotors.com/api/1/vehicles',
+        headers: {
+            'Authorization': 'Bearer 7a2f6fba2fe12c31f876d71fc9b69c411e4516bf1a7eb2d4b151d4640f99de25'
+        }
+    }, function (error, response, body) {
+        //console.log('Status:', response.statusCode);
+        //console.log('Headers:', JSON.stringify(response.headers));
+        //console.log('Response:', JSON.parse(body).response);
+        return callback(JSON.parse(body).response);
+    });
 }
 bot.dialog('ChargeState', function(session) {
-    session.endDialog('Hey there nice to meet you, my name is \'%s\'.', GetChargeState());
+    session.endDialog('Hey there nice to meet you, my name is \'%s\'.', getCharging(function(stuff){
+        stuff;
+    }
+    ));
 }).triggerAction({
     matches: 'Greeting'
 });
