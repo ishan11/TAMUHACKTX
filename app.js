@@ -70,11 +70,10 @@ function GetChargeState(){
         console.log('Status:', response.statusCode);
         //console.log('Headers:', JSON.stringify(response.headers));
         console.log('Response:', body);
-        return JSON.parse(body).response;
+        return 5;//JSON.parse(body).response;
     });
 }
 bot.dialog('ChargeState', function(session) {
-    
     session.endDialog('Hey there nice to meet you, my name is \'%s\'.', GetChargeState());
 }).triggerAction({
     matches: 'Greeting'
