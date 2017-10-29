@@ -68,10 +68,10 @@ bot.dialog('Greeting', function(session) {
         }
     }, function (error, response, body) {
         console.log('Status:', response.statusCode);
-        console.log('Headers:', JSON.stringify(response.headers));
+        //console.log('Headers:', JSON.stringify(response.headers));
         console.log('Response:', body);
     });
-    session.endDialog('Hey there nice to meet you, my name is \'%s\'.',request.response.charging_state);
+    session.endDialog('Hey there nice to meet you, my name is \'%s\'.',JSON.parse(body));
 }).triggerAction({
     matches: 'Greeting'
 });
