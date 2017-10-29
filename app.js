@@ -59,7 +59,7 @@ bot.dialog('Score', function (session) {
 
 var ishan = require('request');
 
-function getCharging(){ //callback) {
+function getCharging(callback) {
     ishan({
         method: 'GET',
         url: 'https://owner-api.teslamotors.com/api/1/vehicles',
@@ -70,12 +70,16 @@ function getCharging(){ //callback) {
         //console.log('Status:', response.statusCode);
         //console.log('Headers:', JSON.stringify(response.headers));
         //console.log('Response:', JSON.parse(body).response);
-        return //callback(JSON.parse(body).response);
+        return callback(JSON.parse(body).response);
     });
-    return 5;
+    //return 5;
 }
 bot.dialog('ChargeState', function(session) {
-    session.endDialog('Hey there nice to meet you, my name is \'%s\'.', getCharging() );
+    var x;
+    getCharging(function (stuff) {
+        x = stuff;
+    });
+    session.endDialog('Hey there nice to meet you, my name is \'%s\'.',x);
 }).triggerAction({
-    matches: 'Greeting'
+    matches: 'ChargeState'
 });
