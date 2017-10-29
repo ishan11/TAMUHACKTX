@@ -75,11 +75,10 @@ function getCharging(callback) {
     //return 5;
 }
 bot.dialog('ChargeState', function(session) {
-    var x;
-    getCharging(function (stuff) {
-        x = stuff;
+    getCharging(function(stuff) {
+        session.endDialog('Hey there nice to meet you, my name is \'%s\'.', stuff);
     });
-    session.endDialog('Hey there nice to meet you, my name is \'%s\'.',x);
+   
 }).triggerAction({
     matches: 'ChargeState'
 });
