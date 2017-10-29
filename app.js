@@ -57,9 +57,9 @@ bot.dialog('Score', function (session) {
     matches: 'Score'
 });
 
-bot.dialog('Greeting', function(session) {
-    var request = require('request');
+var request = require('request');
 
+function GetChargeState(){
     request({
         method: 'GET',
         url: 'https://owner-api.teslamotors.com/api/1/vehicles/48566444687533804/data_request/charge_state',
@@ -70,8 +70,12 @@ bot.dialog('Greeting', function(session) {
         console.log('Status:', response.statusCode);
         //console.log('Headers:', JSON.stringify(response.headers));
         console.log('Response:', body);
+        return JSON.parse(body).response;
     });
-    session.endDialog('Hey there nice to meet you, my name is \'%s\'.',JSON.parse(body));
+}
+bot.dialog('ChargeState', function(session) {
+    
+    session.endDialog('Hey there nice to meet you, my name is \'%s\'.', GetChargeState());
 }).triggerAction({
     matches: 'Greeting'
 });
