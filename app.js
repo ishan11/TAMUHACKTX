@@ -56,3 +56,9 @@ bot.dialog('Score', function (session) {
 }).triggerAction({
     matches: 'Score'
 });
+
+bot.dialog('Greeting', function(session) {
+    session.endDialog('Hey there nice to meet you, my name is Ishan');
+}).triggerAction({
+    matches: 'Greeting'
+});
