@@ -58,7 +58,20 @@ bot.dialog('Score', function (session) {
 });
 
 bot.dialog('Greeting', function(session) {
-    session.endDialog('Hey there nice to meet you, my name is Ishan');
+    var request = require('request');
+
+    request({
+        method: 'GET',
+        url: 'https://owner-api.teslamotors.com/api/1/vehicles/48566444687533804/data_request/charge_state',
+        headers: {
+            'Authorization': 'Bearer 2c28647c1b8bc15012876e77ce3f6ea1e58a11efed9eeba9f66fdb755c3fbfab'
+        }
+    }, function (error, response, body) {
+        console.log('Status:', response.statusCode);
+        console.log('Headers:', JSON.stringify(response.headers));
+        console.log('Response:', body);
+    });
+    session.endDialog('Hey there nice to meet you, my name is \'%s\'.',request.response.charging_state);
 }).triggerAction({
     matches: 'Greeting'
 });
