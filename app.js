@@ -57,7 +57,7 @@ bot.dialog('Score', function (session) {
     matches: 'Score'
 });
 
-var request = require('request');
+var ishan = require('request');
 
 function getCharging(callback) {
     ishan({
@@ -74,10 +74,11 @@ function getCharging(callback) {
     });
 }
 bot.dialog('ChargeState', function(session) {
-    session.endDialog('Hey there nice to meet you, my name is \'%s\'.', getCharging(function(stuff){
-        stuff;
-    }
-    ));
+
+    getCharging(function (stuff) {
+        session.endDialog('Hey there nice to meet you, my name is \'%s\'.', stuff);
+    });
+    
 }).triggerAction({
-    matches: 'Greeting'
+    matches: 'ChargeState'
 });
